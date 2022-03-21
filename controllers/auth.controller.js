@@ -1,5 +1,5 @@
 const User = require('../model/user.model')
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
 const register = async (req, res)=> {
@@ -23,20 +23,19 @@ const register = async (req, res)=> {
     if(user){
         return res.status(201).send({message: 'Created', AccessToken: generateToken(user.id)})
     }
-    return res.status(400).send({message: 'Bad Request...',error: 'User already exist'})
+    return res.status(400).send({message: 'Bad Request...', error: 'User already exist'})
 }
 
 const login = async (req, res)=>{
     const {email, password} = req.body
 
-    const user = User.find({email})
+    const user = await User.findOne({email})
 
     if(user && (await bcrypt.compare(password, user.password))){
-        res.status(200).json({message: 'User logged in'})
+        return res.status(200).json({message: 'User logged in'})
     }
-    return res.status(401).send( 'Unauthorized')
+    return res.status(401).send('Unauthorized')
 }
-
 
 
 const generateToken = (id)=>{
