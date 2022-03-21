@@ -24,5 +24,9 @@ router.get('/account/login', (req, res)=>{
 router.post('/account/login', login)
 
 
+router.get('./account/dashboard', (req, res)=>{
+    res.render('../views/dashboard.ejs')
+})
+
 
 module.exports = router
