@@ -1,5 +1,8 @@
 const express = require('express')
 const app = express()
+const ConnectDB = require('./config/db')
+
+require('dotenv').config()
 
 // middleware
 app.use(express.json())
@@ -16,8 +19,7 @@ const authRoute = require('./routes/auth.route')
 // using routes
 app.use(authRoute);
 
-const PORT = 3000 || process.env.PORT
+// connect DB
+ConnectDB()
 
-app.listen(PORT, ()=>{
-    console.log(`Running server on port ${PORT}`)
-})
+app.listen(process.env.PORT || 3000)

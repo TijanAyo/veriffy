@@ -4,11 +4,11 @@ const {register, login } = require('../controllers/auth.controller')
 
 // @desc: Register Route
 // @route: POST /signup
-router.post('/signup', register)
+router.post('/account/register', register)
 
 
 // @desc: Login Route
 // @route: POST /signin
-router.post('/signin', login)
+router.post('/account/login', login)
 
 module.exports = router
