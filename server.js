@@ -11,9 +11,9 @@ app.use(express.urlencoded({extended:false}))
 app.use(express.static(__dirname + '/public'))
 
 
-/* app.get('/status', (req, res)=>{
-    res.json({message: 'API working okay'})
-}) */
+app.get('/', (req, res)=>{
+    res.redirect('/account/login')
+})
 
 // routes
 const authRoute = require('./routes/auth.route')
