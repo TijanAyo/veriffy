@@ -31,7 +31,7 @@ const register = async (req, res)=> {
 
     if(user){
         //res.status(201).send({message: 'Created', AccessToken: generateToken(user.id)})
-        return redirect('/account/login')
+        return res.redirect('/account/login')
     }
     //req.flash('error', 'User already exist')
     //res.status(400).send({message: 'Bad Request...', error: 'User already exist'})
