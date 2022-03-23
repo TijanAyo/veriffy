@@ -1,8 +1,8 @@
 const User = require('../model/user.model')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const flash = require('express-flash')
 const { redirect } = require('express/lib/response')
+
 
 const register = async (req, res)=> {
     const {name, email, password} = req.body
@@ -40,7 +40,7 @@ const login = async (req, res)=>{
 
     if(user && (await bcrypt.compare(password, user.password))){
         // return res.status(200).json({message: 'User logged in'})
-        return res.render('../views/dashboard.ejs')
+        return res.render('../views/dashboard.ejs', {name: user.name})
     }
     return res.render('../views/login.ejs')
     // return res.status(401).render('Unauthorized')
