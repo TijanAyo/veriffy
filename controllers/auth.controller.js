@@ -1,7 +1,14 @@
+const express = require('express')
+const app = express()
+
 const User = require('../model/user.model')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+
+const flash = require('express-flash')
 const { redirect } = require('express/lib/response')
+
+app.use(flash())
 
 
 const register = async (req, res)=> {
@@ -9,8 +16,7 @@ const register = async (req, res)=> {
 
     const userexist = await User.findOne({email})
     if (userexist){
-        req.flash('error', 'User with this email already exist')
-        res.status(400)
+        res.status(400).send('User with this email already exist')
     }
 
     // Hash Password
@@ -24,13 +30,12 @@ const register = async (req, res)=> {
     })
 
     if(user){
-        req.flash('info', 'Account Created')
         //res.status(201).send({message: 'Created', AccessToken: generateToken(user.id)})
-        return redirect('/account/login')
+        return redirect('/account/login', {success: 'Account Created'})
     }
-    req.flash('error', 'User already exist')
+    //req.flash('error', 'User already exist')
     //res.status(400).send({message: 'Bad Request...', error: 'User already exist'})
-    return res.render('../views/index.ejs')
+    return res.render('../views/index.ejs', {error: 'User already exist'})
 }
 
 const login = async (req, res)=>{
@@ -42,7 +47,7 @@ const login = async (req, res)=>{
         // return res.status(200).json({message: 'User logged in'})
         return res.render('../views/dashboard.ejs', {name: user.name})
     }
-    return res.render('../views/login.ejs')
+    return res.render('../views/login.ejs', {message: 'Unauthorized'})
     // return res.status(401).render('Unauthorized')
 }
 
