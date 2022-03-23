@@ -31,11 +31,11 @@ const register = async (req, res)=> {
 
     if(user){
         //res.status(201).send({message: 'Created', AccessToken: generateToken(user.id)})
-        return redirect('/account/login', {success: 'Account Created'})
+        return redirect('/account/login')
     }
     //req.flash('error', 'User already exist')
     //res.status(400).send({message: 'Bad Request...', error: 'User already exist'})
-    return res.render('../views/index.ejs', {error: 'User already exist'})
+    return res.render('../views/index.ejs')
 }
 
 const login = async (req, res)=>{
